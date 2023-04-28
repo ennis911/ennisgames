@@ -33,8 +33,8 @@ PLATFORM_LIST = [(0, HEIGHT - 40, WIDTH, 40),
                  (350, HEIGHT - 200, 100, 20),
                  (175, HEIGHT - 100, 50, 20)]
 
-x_bg = 0
-x_e = 0
+#x_bg = 0
+#x_e = 0
 
 
 # Player class
@@ -196,7 +196,7 @@ class Enemy(pygame.sprite.Sprite):
         self.frame_count = 0
 
     def update(self):
-        self.rect.x += self.speedx - x_e
+        self.rect.x += self.speedx + enemies_speed
         if self.rect.right < 0:
             self.kill()
         
@@ -285,6 +285,9 @@ death_time = 0
 running=True
 bg_x = 0
 plat_x = 0
+bg_speed = 0
+enemies_speed = 0
+platforms_speed = 0
 
 # Add a global variable to indicate if the game should restart
 restart = False
@@ -301,15 +304,15 @@ while running:
         enemy.update() # Llama al método update de cada enemigo para actualizar su posición
 
     # Move background
-    bg_x -= 4 + x_bg # Aumenta este valor para aumentar la velocidad de movimiento del fondo
+    bg_x -= 4 + bg_speed # Aumenta este valor para aumentar la velocidad de movimiento del fondo
     if bg_x < -bg_rect.width:
         bg_x = 0
 
     # Move platforms
-    plat_x -= 4 + x_e # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas
+    plat_x -= 4 + platforms_speed # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas
     for plat in platforms:
         if not plat.is_ground:
-            plat.rect.x -= 4 + x_e  # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas individuales
+            plat.rect.x -= 4 + platforms_speed  # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas individuales
             if plat.rect.right < 0:
                 plat.kill()
                 # Generate random platform size and position
@@ -344,15 +347,14 @@ while running:
                 space_pressed_time = pygame.time.get_ticks()
             elif event.key == pygame.K_z:
                 player.shoot()
-            elif event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-                # Player is pressing right or left arrow key
-                player.vel.x *= 20  # You can change this value to adjust the speed increase
-            elif event.key == pygame.K_RIGHT:
-                x_bg += 5
-                x_e += 5
-            elif event.key == pygame.K_LEFT:
-                x_bg -= 5
-                x_e -= 5
+            if event.key == pygame.K_RIGHT:
+                bg_speed += 5
+                enemies_speed += 5
+                platforms_speed += 5
+            if event.key == pygame.K_LEFT:
+                bg_speed -= 5
+                enemies_speed -= 5
+                platforms_speed -= 5
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
                 space_pressed_duration = pygame.time.get_ticks() - space_pressed_time
@@ -400,16 +402,16 @@ while running:
         # Player hit an enemy!
         # Activate death animation
         player.dead = True
-        
-    # Restablecer las variables x_bg y x_e a su valor inicial
-    x_bg = 0
-    x_e = 0
+
 
     # Draw / render sprites group and flip display after drawing everything!
     screen.fill(BLACK)
     screen.blit(bg, (bg_x, 0))
     screen.blit(bg, (bg_x + bg_rect.width, 0))
     all_sprites.draw(screen)
+     # Restablecer las variables x_bg y x_e a su valor inicial
+    x_bg = 0
+    x_e = 0
     pygame.display.flip()
 
     # Check if game should restart
