@@ -23,7 +23,7 @@ BLUE = (0, 0, 255)
 
 # Player properties
 PLAYER_ACC = 0.5
-PLAYER_FRICTION = -0.12
+PLAYER_FRICTION = -0.06
 PLAYER_GRAVITY = 0.8
 
 # Platforms
@@ -104,9 +104,12 @@ class Player(pygame.sprite.Sprite):
         self.acc.x += self.vel.x * PLAYER_FRICTION
 
         # Equations of motion
-        self.vel += self.acc
+        #self.vel += self.acc
         self.pos += self.vel + PLAYER_ACC * self.acc
-
+        
+        # Update player position
+        self.pos.x += self.vel.x
+        
         # Wrap around the sides of the screen
         if self.pos.x > WIDTH:
             self.pos.x = WIDTH
@@ -353,7 +356,7 @@ while running:
                 player.shoot()
             elif event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
             # Player is pressing right or left arrow key
-                player.vel.x *= 10  # You can change this value to adjust the speed increase
+                player.vel.x *= 20  # You can change this value to adjust the speed increase
                 
     # If the game is paused, enter a while loop
     while paused:
