@@ -306,7 +306,7 @@ while running:
         bg_x = 0
 
     # Move platforms
-    plat_x -= 4 # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas
+    plat_x -= 4 + x_e # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas
     for plat in platforms:
         if not plat.is_ground:
             plat.rect.x -= 4 + x_e  # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas individuales
@@ -400,6 +400,10 @@ while running:
         # Player hit an enemy!
         # Activate death animation
         player.dead = True
+        
+    # Restablecer las variables x_bg y x_e a su valor inicial
+    x_bg = 0
+    x_e = 0
 
     # Draw / render sprites group and flip display after drawing everything!
     screen.fill(BLACK)
