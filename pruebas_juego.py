@@ -196,7 +196,7 @@ class Enemy(pygame.sprite.Sprite):
         self.frame_count = 0
 
     def update(self):
-        self.rect.x += self.speedx
+        self.rect.x += self.speedx - x_e
         if self.rect.right < 0:
             self.kill()
         
@@ -301,7 +301,7 @@ while running:
         enemy.update() # Llama al método update de cada enemigo para actualizar su posición
 
     # Move background
-    bg_x -= 4 # Aumenta este valor para aumentar la velocidad de movimiento del fondo
+    bg_x -= 4 + x_bg # Aumenta este valor para aumentar la velocidad de movimiento del fondo
     if bg_x < -bg_rect.width:
         bg_x = 0
 
@@ -309,7 +309,7 @@ while running:
     plat_x -= 4 # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas
     for plat in platforms:
         if not plat.is_ground:
-            plat.rect.x -= 4 # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas individuales
+            plat.rect.x -= 4 + x_e  # Aumenta este valor para aumentar la velocidad de movimiento de las plataformas individuales
             if plat.rect.right < 0:
                 plat.kill()
                 # Generate random platform size and position
