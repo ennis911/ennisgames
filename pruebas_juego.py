@@ -33,6 +33,7 @@ PLATFORM_LIST = [(0, HEIGHT - 40, WIDTH, 40),
                  (350, HEIGHT - 200, 100, 20),
                  (175, HEIGHT - 100, 50, 20)]
 
+
 # Player class
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -97,8 +98,7 @@ class Player(pygame.sprite.Sprite):
                 self.timer = now
 
             # Increase the player's speed
-            self.vel.x *= 5  # You can change this value to adjust the speed increase
-            print("Increasing speed")
+            self.vel.x *= 10  # You can change this value to adjust the speed increase
 
         # Apply friction
         self.acc.x += self.vel.x * PLAYER_FRICTION
@@ -351,6 +351,9 @@ while running:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_z:
                 player.shoot()
+            elif event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
+            # Player is pressing right or left arrow key
+                player.vel.x *= 10  # You can change this value to adjust the speed increase
                 
     # If the game is paused, enter a while loop
     while paused:
