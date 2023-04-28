@@ -321,11 +321,11 @@ while running:
     paused = False
 
     for event in pygame.event.get():
-        # Check for closing window event
+    # Check for closing window event
         if event.type == QUIT:
             running=False
         elif event.type == ADDENEMY:
-        # Llama a la función add_enemy cuando se recibe un evento ADDENEMY
+            # Llama a la función add_enemy cuando se recibe un evento ADDENEMY
             interval = random.randint(500, 3000)
             add_enemy(interval)
         elif event.type == pygame.KEYDOWN:
@@ -339,7 +339,16 @@ while running:
             if event.key == pygame.K_SPACE:
                 space_pressed_time = pygame.time.get_ticks()
             elif event.key == pygame.K_z:
-             player.shoot()
+                player.shoot()
+            elif event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
+                # Player is pressing right or left arrow key
+                player.vel.x *= 20  # You can change this value to adjust the speed increase
+            elif event.key == pygame.K_RIGHT:
+                x_bg += 5
+                x_e += 5
+            elif event.key == pygame.K_LEFT:
+                x_bg -= 5
+                x_e -= 5
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
                 space_pressed_duration = pygame.time.get_ticks() - space_pressed_time
@@ -351,12 +360,6 @@ while running:
                 else:
                     # Going down
                     player.image = player.jump_images[1]
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_z:
-                player.shoot()
-            elif event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
-            # Player is pressing right or left arrow key
-                player.vel.x *= 20  # You can change this value to adjust the speed increase
                 
     # If the game is paused, enter a while loop
     while paused:
