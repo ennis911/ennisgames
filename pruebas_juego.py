@@ -33,6 +33,9 @@ PLATFORM_LIST = [(0, HEIGHT - 40, WIDTH, 40),
                  (350, HEIGHT - 200, 100, 20),
                  (175, HEIGHT - 100, 50, 20)]
 
+x_bg = 0
+x_e = 0
+
 
 # Player class
 class Player(pygame.sprite.Sprite):
@@ -74,6 +77,7 @@ class Player(pygame.sprite.Sprite):
         self.frame = 0
         self.timer = pygame.time.get_ticks()
         self.is_jumping_up = False
+
 
     def update(self):
         # Update the image based on what the player is doing
